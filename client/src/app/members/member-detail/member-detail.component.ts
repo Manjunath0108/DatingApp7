@@ -54,5 +54,6 @@ loadMember(){
       this.galleryImages=this.getImages();
     }
   })
+  
 }
 }
