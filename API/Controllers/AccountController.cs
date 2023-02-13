@@ -25,6 +25,8 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
+
+
             using var hmac = new HMACSHA512();   //hashing
 
             var user = new AppUser
@@ -45,11 +47,13 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto) //returns userdto
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x =>
-            x.UserName == loginDto.Username);
-
+                                                //checks if only one is satisfied
+            var user = await _context.Users
+            .Include(p=>p.Photos)
+            .SingleOrDefaultAsync(x =>x.UserName == loginDto.Username);
+            
             if (user == null) return Unauthorized("invalid username");
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
@@ -62,7 +66,8 @@ namespace API.Controllers
              return new UserDto
             {
                 Username=user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                PhotoUrl=user.Photos.FirstOrDefault(x=>x.IsMain)?.Url
             };
         }
         private async Task<bool> UserExists(string username)
@@ -71,3 +76,13 @@ namespace API.Controllers
         }
     }
 }
+
+
+/*This code is an implementation of an AccountController in an ASP.NET Core web API. 
+The AccountController has two main endpoints: "register" and "login". 
+The "register" endpoint creates a new user by adding it to the database and returning a 
+UserDto object with the user's username and token. The "login" endpoint verifies if a user 
+exists and checks if the entered password matches the hashed password stored in the database.
+ If the username and password are correct, it returns a UserDto object with the user's username and token.
+  The UserExists method is used to check if a user with a given username already exists in the database.
+ The class also uses HMACSHA512 for password hashing and encoding.*/

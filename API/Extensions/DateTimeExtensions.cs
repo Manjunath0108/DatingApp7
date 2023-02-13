@@ -7,7 +7,7 @@ namespace API.Extensions
 
         var age=today.Year - dob.Year;
 
-        if(dob>today.AddYears(-age)) age--;
+        if(dob>today.AddYears(-age)) age--;//checking if bday istday
 
         return age;
        } 

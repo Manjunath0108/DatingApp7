@@ -28,3 +28,12 @@ export class LoadingInterceptor implements HttpInterceptor {
     
   }
 }
+
+
+
+/*  This code is an Angular service that implements the HttpInterceptor interface. The purpose of this service
+ is to add a delay of 1 second to all HTTP requests and show a loading indicator while the request is in progress.
+The LoadingInterceptor uses the BusyService to handle the display of a loading indicator. 
+The busyService.busy() method is called before the request is sent and the busyService.idle() method is called
+ when the request is complete, which will indicate to the user that the request has finished.
+ The delay of 1 second is added to the HTTP request using the delay operator from the RxJS library. */

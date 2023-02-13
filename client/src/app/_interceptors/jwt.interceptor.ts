@@ -30,3 +30,8 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(request);
   }
 }
+
+/**  The JwtInterceptor takes the token from the current user, if it exists,
+ *  and adds it to the Authorization header of the request as a bearer token. 
+ * The request is then passed to the next handler in the HTTP chain, which is responsible
+ *  for actually sending the request. */

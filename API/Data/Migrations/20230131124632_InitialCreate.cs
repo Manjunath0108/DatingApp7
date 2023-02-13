@@ -32,3 +32,12 @@ namespace API.Data.Migrations
         }
     }
 }
+
+
+/*
+It defines a class InitialCreate that derives from Migration. 
+The class contains two methods, Up and Down, which correspond to the actions performed 
+when the migration is applied and rolled back, respectively. The Up method creates a table called
+ Users with two columns: Id and UserName. The Id column is defined as an auto-incrementing integer primary key, 
+ and the UserName column is defined as a nullable string. The Down method drops the Users table.  
+*/

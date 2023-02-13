@@ -19,3 +19,12 @@ namespace API.Helpers
         }
     }
 }
+
+
+/*
+Map an "AppUser" object to a "MemberDto" object. The destination's "PhotoUrl" property is 
+mapped from the source's main photo's "Url" property. The destination's "Age" property is mapped 
+from the source's calculated age based on the "DateOfBirth" property.
+Map a "Photo" object to a "PhotoDto" object.
+Map a "MemberUpdateDto" object to an "AppUser" object.
+*/

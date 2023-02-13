@@ -22,3 +22,11 @@ return services;
       }  
     }
 }
+
+// adding JWT authentication to an ASP.NET Core application using the IServiceCollection extension method
+
+
+//The method takes an instance of IConfiguration as a parameter, 
+// which is used to retrieve the value of the TokenKey setting from the application's configuration. 
+// This value is used as the key for a symmetric security key, which is used to validate the 
+// authenticity of the JSON Web Token (JWT) sent with each request to the API.

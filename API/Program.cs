@@ -1,13 +1,10 @@
-using System.Text;
+
 using API.Data;
 using API.Entities;
 using API.Extensions;
-using API.Interfaces;
 using API.Middleware;
-using API.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,3 +46,19 @@ catch (Exception ex)
 }
 
 app.Run();
+
+
+
+
+/*  
+Create the web application builder using WebApplication.CreateBuilder(args).
+Add services to the container, including controllers, application services, and identity services.
+Use the ExceptionMiddleware middleware to handle exceptions.
+Configure the HTTP request pipeline to allow cross-origin resource sharing (CORS) from https://localhost:4200.
+Use authentication and authorization middlewares.
+Map the controllers.
+Create a scope and get the required services from the service provider.
+Migrate the database using the DataContext and seed the users using the Seed class.
+If an error occurs while migrating, log the error using the ILogger service.
+Start the application using app.Run().
+*/

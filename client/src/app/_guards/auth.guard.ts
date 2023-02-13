@@ -25,3 +25,15 @@ export class AuthGuard implements CanActivate {
   }
   
 }
+
+
+
+
+/* This is an Angular service that implements the CanActivate guard. 
+It is used to restrict access to certain routes in the application.
+ The guard checks if a user is authenticated by subscribing to the 
+ currentUser$ observable from the AccountService. If the user is authenticated,
+  the guard returns true and the user can access the route. If the user is not authenticated, 
+  the guard returns false and displays an error message using the toastr service.
+
+*/
