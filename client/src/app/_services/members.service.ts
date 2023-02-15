@@ -15,37 +15,37 @@ export class MembersService {
   baseUrl = environment.apiUrl;
   members: Member[] = [];
   memberCache = new Map();
-  user:User |undefined;
-  userParams:UserParams|undefined;
+  user: User | undefined;
+  userParams: UserParams | undefined;
 
 
 
-  constructor(private http: HttpClient,private accountService:AccountService) { 
+  constructor(private http: HttpClient, private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
-      next:user=>{
-        if(user){
-          this.userParams=new UserParams(user);
-          this.user=user;
+      next: user => {
+        if (user) {
+          this.userParams = new UserParams(user);
+          this.user = user;
         }
       }
     })
   }
 
 
-getUserParams(){
-  return this.userParams;
-}
-setUserParams(params:UserParams){
-  this.userParams=params;
-}
-
-  resetUserParams(){
-  if(this.user){
-    this.userParams=new UserParams(this.user);
+  getUserParams() {
     return this.userParams;
   }
-  return;
-}
+  setUserParams(params: UserParams) {
+    this.userParams = params;
+  }
+
+  resetUserParams() {
+    if (this.user) {
+      this.userParams = new UserParams(this.user);
+      return this.userParams;
+    }
+    return;
+  }
 
   getMembers(userParams: UserParams) {
     const response = this.memberCache.get(Object.values(userParams).join('-'));
@@ -96,9 +96,9 @@ setUserParams(params:UserParams){
   }
 
   getMember(username: string) {
-   const member = [...this.memberCache.values()]
-    .reduce((arr,elem)=>arr.concat(elem.result),[])
-    .find((member:Member)=>member.userName===username);
+    const member = [...this.memberCache.values()]
+      .reduce((arr, elem) => arr.concat(elem.result), [])
+      .find((member: Member) => member.userName === username);
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 
@@ -117,6 +117,16 @@ setUserParams(params:UserParams){
 
   deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
+  }
+
+  addLike(username: string) {
+    return this.http.post(this.baseUrl + 'likes/' + username, {});
+  }
+  getLikes(predicate: string,pageNumber:number,pageSize:number) {
+    let params=this.getPaginationHeaders(pageNumber,pageSize);
+
+    params=params.append('predicate',predicate);
+    return this.getPaginatedResult<Member[]>(this.baseUrl+'likes',params);
   }
 
 }
